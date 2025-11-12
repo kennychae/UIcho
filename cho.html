@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>웹 샘플</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <header id="topBar">
+      <!-- 왼쪽: 아이콘 버튼 -->
+      <div id="leftControls">
+        <button id="subiconBtn" name="subiconBtn" type="button" aria-label="아이콘 버튼">
+          <img
+            id="subiconImage"
+            name="subiconImage"
+            src="subicon.png"
+            alt="서브 아이콘"
+          />
+        </button>
+      </div>
+
+      <!-- 가운데 텍스트 -->
+      <div id="titleArea">
+        <div id="textDisplay" name="textDisplay">Test</div>
+      </div>
+
+      <!-- 오른쪽: 설정 버튼 -->
+      <div id="rightControls">
+        <button id="settingsBtn" name="settingsBtn" type="button" aria-label="설정">
+          <span id="settingsIcon" name="settingsIcon"></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 메인 화면 -->
+    <main id="mainScreen">
+      <img id="mainImage" name="mainImage" src="maicon.png" alt="메인 이미지" />
+    </main>
+
+    <!-- 하단 입력 -->
+    <footer id="bottomInput">
+      <input
+        id="userTextInput"
+        name="userTextInput"
+        type="text"
+        placeholder="텍스트를 입력하세요"
+      />
+    </footer>
+  </div>
+</body>
+</html>

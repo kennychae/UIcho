@@ -1,0 +1,195 @@
+/* 기본 리셋 & 변수 */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+:root{
+  --bg:#0f1115;
+  --panel:#D8E2FF;
+  --text:#e8ecf1;
+  --muted:#8b93a6;
+  --accent:#3a7bfd;
+  --border:#232838;
+  --btnbg:#152E6B;
+}
+
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+}
+
+/* 앱 컨테이너: 모바일 세로 화면 느낌 (좁은 폭) */
+#app{
+  width: 100%;
+  max-width: 420px;           /* 폭 한정 */
+  min-height: 100svh;         /* 높이 */
+  margin: 0 auto;
+  display: grid;
+  grid-template-rows: auto 1fr auto; /* 상단바 / 메인 / 하단 입력 */
+  background: var(--panel);
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
+
+/* 상단바 */
+#topBar{
+  display: grid;
+  grid-template-columns: 56px 1fr 56px; /* 좌 버튼 / 가운데 텍스트 / 우 버튼 */
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+
+/* 왼쪽 아이콘 버튼 */
+#leftControls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 40px;
+}
+
+#subiconBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--btnbg);
+  padding: 0;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+#subiconBtn:active {
+  transform: scale(0.97);
+}
+
+#subiconImage {
+  width: 28px;
+  height: 28px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* 가운데 디스플레이 */
+#titleArea{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0; /* overflow ellipsis를 위해 필요 */
+}
+#textDisplay{
+  max-width: 100%;
+  padding: 8px 10px;
+  text-align: center;
+  font-weight: 600;
+  border-radius: 10px;
+  background: var(--btnbg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  outline: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  user-select: none;     /* 텍스트 드래그 불가 */
+  pointer-events: none;  /* 클릭 불가 */
+}
+#textDisplay:focus{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+/* 오른쪽 설정 버튼(정사각형 + 가로 3줄) */
+#rightControls{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 40px;
+}
+#settingsBtn{
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--btnbg);
+  cursor: pointer;
+  padding: 0;
+  display: grid;
+  place-items: center;
+}
+#settingsBtn:active{ transform: scale(0.98); }
+
+/* 햄버거 아이콘: 하나의 span으로 3줄 표현 */
+#settingsIcon{
+  position: relative;
+  width: 18px; height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  display: block;
+}
+#settingsIcon::before,
+#settingsIcon::after{
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+}
+#settingsIcon::before{ top: -6px; }
+#settingsIcon::after { top:  6px; }
+
+/* 메인 화면 */
+#mainScreen{
+  display: grid;
+  place-items: center;
+  padding: 14px 12px;
+  overflow: hidden;
+}
+#mainImage{
+  max-width: min(86%, 320px);
+  max-height: 56vh;
+  object-fit: contain;
+  border-radius: 14px;
+  /* border: 1px solid var(--border); */
+  background: var(--panel);
+  display: block;
+}
+
+/* 하단 입력 */
+#bottomInput{
+  position: sticky;
+  bottom: 0;
+  background: var(--panel);
+  border-top: 1px solid var(--border);
+  padding: 10px 12px;
+}
+#userTextInput{
+  width: 100%;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #111521;
+  color: var(--text);
+  padding: 0 12px;
+  outline: none;
+  caret-color: var(--accent);
+}
+#userTextInput::placeholder{ color: var(--muted); }
+#userTextInput:focus{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+/* 큰 화면에서도 모바일 느낌 유지 */
+@media (min-width: 768px){
+  #app{ margin: 24px auto; border-radius: 16px; }
+}
+
+/* iOS 등 입력 시 하단 튐 방지용 여유 */
+@supports (padding: max(0px)){
+  #bottomInput{ padding-bottom: max(10px, env(safe-area-inset-bottom)); }
+}
