@@ -7,105 +7,107 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="app">
-    <header id="topBar">
-      <!-- 왼쪽: 아이콘 버튼 -->
-      <div id="leftControls">
-        <button id="subiconBtn" name="subiconBtn" type="button" aria-label="아이콘 버튼">
-          <img
-            id="subiconImage"
-            name="subiconImage"
-            src="subicon.png"
-            alt="서브 아이콘"
-          />
+  <!-- 가운데에 놓을 '폰 화면' 래퍼 -->
+  <div id="phone">
+
+    <!-- 🔹 홈 화면 -->
+    <div id="homeScreen" class="screen-page">
+      <header id="homeHeader">
+        <span id="homeTitle">채팅</span>
+      </header>
+
+      <main id="homeMain">
+        <!-- 새 채팅 시작 버튼 -->
+        <button id="startChatBtn" type="button" class="chatListItem newChat">
+          <span class="chatAvatar">＋</span>
+          <div class="chatText">
+            <div class="chatTitle">새 채팅 시작</div>
+            <div class="chatSubtitle">새로운 대화를 시작해 보세요</div>
+          </div>
         </button>
-      </div>
+      </main>
+    </div>
 
-      <!-- 가운데 텍스트 -->
-      <div id="titleArea">
-        <div id="textDisplay" name="textDisplay">Test</div>
-      </div>
+    <!-- 🔹 채팅 화면 (지금까지 만들었던 것들) -->
+    <div id="app" class="screen-page hidden">
+      <header id="topBar">
+        <!-- 왼쪽: 아이콘 버튼 (여기 나중에 '홈으로' 기능 달아도 됨) -->
+        <div id="leftControls">
+          <button id="subiconBtn" name="subiconBtn" type="button" aria-label="아이콘 버튼">
+            <img
+              id="subiconImage"
+              name="subiconImage"
+              src="subicon.png"
+              alt="서브 아이콘"
+            />
+          </button>
+        </div>
 
-      <!-- 오른쪽: 설정 버튼 -->
-      <div id="rightControls">
-        <button id="settingsBtn" name="settingsBtn" type="button" aria-label="설정">
-          <span id="settingsIcon" name="settingsIcon"></span>
-        </button>
-      </div>
-    </header>
+        <!-- 가운데 텍스트 -->
+        <div id="titleArea">
+          <div id="textDisplay" name="textDisplay">Test</div>
+        </div>
 
-    <!-- 메인 화면 -->
-	<main id="mainScreen">
-		<img id="mainImage" name="mainImage" src="maicon.png" alt="메인 이미지" />
+        <!-- 오른쪽: 설정 버튼 -->
+        <div id="rightControls">
+          <button id="settingsBtn" name="settingsBtn" type="button" aria-label="설정">
+            <span id="settingsIcon" name="settingsIcon"></span>
+          </button>
+        </div>
+      </header>
 
-		<!-- 채팅 로그 영역 추가 -->
-		<div id="chatLog" class="hidden">
-			<button id="chatLogCloseBtn" type="button">×</button>
-			<div id="chatLogMessages"></div>
-		</div>
-	</main>
+      <!-- 메인 화면 -->
+      <main id="mainScreen">
+        <img id="mainImage" name="mainImage" src="maicon.png" alt="메인 이미지" />
 
+        <!-- 채팅 로그 영역 -->
+        <div id="chatLog" class="hidden">
+          <button id="chatLogCloseBtn" type="button">×</button>
+          <div id="chatLogMessages"></div>
+        </div>
+      </main>
 
-    <!-- 하단 입력 -->
-    <footer id="bottomInput">
-      <input
-        id="userTextInput"
-        name="userTextInput"
-        type="text"
-        placeholder="채팅을 입력하세요"
-      />
-    </footer>
+      <!-- 하단 입력 -->
+      <footer id="bottomInput">
+        <input
+          id="userTextInput"
+          name="userTextInput"
+          type="text"
+          placeholder="텍스트를 입력하세요"
+        />
+      </footer>
 
-    <!-- 여기부터 추가: 사이드바 & 오버레이 -->
-    <aside id="sidebar" aria-label="설정 사이드바">
-      <div id="sidebarHeader">
-        <span>설정</span>
-        <button id="sidebarCloseBtn" type="button" aria-label="사이드바 닫기">×</button>
-      </div>
+      <!-- 사이드바 -->
+      <aside id="sidebar" aria-label="설정 사이드바">
+        <div id="sidebarHeader">
+          <span>설정</span>
+          <button id="sidebarCloseBtn" type="button" aria-label="사이드바 닫기">×</button>
+        </div>
+        <div id="sidebarContent">
+          <div class="settingRow">
+            <span class="settingLabel">설정 1</span>
+            <label class="toggleSwitch">
+              <input type="checkbox" id="setting1Toggle" name="setting1Toggle" />
+              <span class="toggleSlider"></span>
+            </label>
+          </div>
+        </div>
 		<div id="sidebarContent">
-			<div class="settingRow">
-				<span class="settingLabel">설정 1</span>
+          <div class="settingRow">
+            <span class="settingLabel">설정 2</span>
+            <label class="toggleSwitch">
+              <input type="checkbox" id="setting1Toggle" name="setting1Toggle" />
+              <span class="toggleSlider"></span>
+            </label>
+          </div>
+        </div>
+      </aside>
 
-				<label class="toggleSwitch">
-				<input
-					type="checkbox"
-					id="setting1Toggle"
-					name="setting1Toggle"
-				/>
-				<span class="toggleSlider"></span>
-				</label>
-			</div>
-			<div class="settingRow">
-				<span class="settingLabel">설정 2</span>
+      <div id="sidebarOverlay"></div>
+    </div>
 
-				<label class="toggleSwitch">
-				<input
-					type="checkbox"
-					id="setting2Toggle"
-					name="setting2Toggle"
-				/>
-				<span class="toggleSlider"></span>
-				</label>
-			</div>
-			<div class="settingRow">
-				<span class="settingLabel">설정 3</span>
-
-				<label class="toggleSwitch">
-				<input
-					type="checkbox"
-					id="setting3Toggle"
-					name="setting3Toggle"
-				/>
-				<span class="toggleSlider"></span>
-				</label>
-			</div>
-		</div>
-    </aside>
-
-    <div id="sidebarOverlay"></div>
   </div>
 
-  <!-- JS 파일 연결 -->
   <script src="scripts.js"></script>
 </body>
 </html>
