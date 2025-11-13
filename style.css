@@ -4,11 +4,12 @@ html, body { margin: 0; padding: 0; }
 :root{
   --bg:#0f1115;
   --panel:#D8E2FF;
-  --text:#e8ecf1;
+  --text:#000000;
   --muted:#8b93a6;
   --accent:#3a7bfd;
   --border:#232838;
-  --btnbg:#152E6B;
+  --btnbg:#3DA5EB;
+  --intext:#FFFFFF
 }
 
 body{
@@ -79,7 +80,7 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 0; /* overflow ellipsis를 위해 필요 */
+  min-width: 0;
 }
 #textDisplay{
   max-width: 100%;
@@ -87,23 +88,16 @@ body{
   text-align: center;
   font-weight: 600;
   border-radius: 10px;
-  background: var(--btnbg);
-  border: 1px solid var(--border);
   color: var(--text);
   outline: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-
-  user-select: none;     /* 텍스트 드래그 불가 */
-  pointer-events: none;  /* 클릭 불가 */
-}
-#textDisplay:focus{
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+  user-select: none;
+  pointer-events: none;
 }
 
-/* 오른쪽 설정 버튼(정사각형 + 가로 3줄) */
+/* 오른쪽 설정 버튼 */
 #rightControls{
   display: flex;
   align-items: center;
@@ -122,7 +116,7 @@ body{
 }
 #settingsBtn:active{ transform: scale(0.98); }
 
-/* 햄버거 아이콘: 하나의 span으로 3줄 표현 */
+/* 햄버거 아이콘 */
 #settingsIcon{
   position: relative;
   width: 18px; height: 2px;
@@ -144,17 +138,25 @@ body{
 
 /* 메인 화면 */
 #mainScreen{
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;   /* 기본: 정가운데 */
   padding: 14px 12px;
   overflow: hidden;
+  gap: 8px;
 }
+
+/* 채팅 로그가 보일 때는 위쪽으로 붙이기 */
+#mainScreen.with-chat{
+  justify-content: flex-start;
+}
+
 #mainImage{
   max-width: min(86%, 320px);
   max-height: 56vh;
   object-fit: contain;
   border-radius: 14px;
-  /* border: 1px solid var(--border); */
   background: var(--panel);
   display: block;
 }
@@ -173,7 +175,7 @@ body{
   border-radius: 12px;
   border: 1px solid var(--border);
   background: #111521;
-  color: var(--text);
+  color: var(--intext);
   padding: 0 12px;
   outline: none;
   caret-color: var(--accent);
@@ -189,7 +191,220 @@ body{
   #app{ margin: 24px auto; border-radius: 16px; }
 }
 
-/* iOS 등 입력 시 하단 튐 방지용 여유 */
+/* 입력 시 하단 튐 방지용 여유 */
 @supports (padding: max(0px)){
   #bottomInput{ padding-bottom: max(10px, env(safe-area-inset-bottom)); }
+}
+
+/* ===== 사이드바 & 오버레이 ===== */
+
+#sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 260px;
+  max-width: 80%;
+  height: 100vh;
+  background: var(--btnbg);
+  border-left: 1px solid var(--border);
+  box-shadow: -10px 0 25px rgba(0,0,0,0.5);
+  transform: translateX(100%);
+  transition: transform 0.25s ease-out;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  color: var(--text);
+}
+
+#sidebar.open {
+  transform: translateX(0);
+}
+
+#sidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+}
+
+#sidebarContent {
+  padding: 12px 16px;
+  font-size: 14px;
+}
+
+#sidebarCloseBtn {
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* 오버레이 */
+#sidebarOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease-out;
+  z-index: 15;
+}
+
+#sidebarOverlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ===== 사이드바 설정 행 & 토글 ===== */
+
+.settingRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.settingLabel {
+  font-size: 14px;
+}
+
+/* 토글 스위치 공통 */
+.toggleSwitch {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 22px;
+}
+
+/* 실제 체크박스는 숨김 */
+.toggleSwitch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* 스위치 배경(슬라이더) */
+.toggleSlider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #444a5a;           /* 꺼졌을 때 배경 */
+  border-radius: 999px;                /* 완전 둥글게 */
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+/* 동그란 손잡이 */
+.toggleSlider::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.35);
+  transition: transform 0.2s ease;
+}
+
+/* 체크됐을 때 색/위치 변경 */
+.toggleSwitch input:checked + .toggleSlider {
+  background-color: var(--accent);     /* 파란 불 들어온 느낌 */
+}
+
+.toggleSwitch input:checked + .toggleSlider::before {
+  transform: translateX(18px);         /* 오른쪽으로 이동 */
+}
+
+/* 포커스 링 (키보드 탭용, 선택 사항) */
+.toggleSwitch input:focus + .toggleSlider {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+/* 숨김용 공통 클래스 */
+.hidden {
+  display: none;
+}
+
+/* 채팅 로그 박스 */
+#chatLog {
+  width: 100%;
+  max-height: 40vh;
+  overflow-y: auto;
+  padding: 20px 2px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  background: rgba(0,0,0,0.1);
+  border-radius: 8px;
+}
+
+#chatLog.hidden {
+  display: none;
+}
+
+/* X 버튼 */
+#chatLogCloseBtn {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  color: #333;
+  font-weight: bold;
+}
+#chatLogCloseBtn:active {
+  transform: scale(0.9);
+}
+
+#chatLogMessages {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* 채팅 한 줄 */
+.chatRow {
+  display: flex;
+}
+
+/* 내 메시지 오른쪽 정렬 */
+.chatRow.me {
+  justify-content: flex-end;
+}
+
+/* (원하면 나중에 상대방 쪽도 쓸 수 있게 준비) */
+.chatRow.other {
+  justify-content: flex-start;
+}
+
+/* 말풍선 공통 */
+.chatBubble {
+  max-width: 70%;
+  padding: 6px 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* 내 메시지 말풍선 */
+.chatRow.me .chatBubble {
+  background: var(--btnbg);
+  color: var(--text);
+  border-bottom-right-radius: 4px;
+}
+
+/* (상대 메시지용 – 필요하면 사용) */
+.chatRow.other .chatBubble {
+  background: rgba(0,0,0,0.15);
+  color: #111;
+  border-bottom-left-radius: 4px;
 }

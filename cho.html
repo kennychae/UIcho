@@ -35,9 +35,16 @@
     </header>
 
     <!-- 메인 화면 -->
-    <main id="mainScreen">
-      <img id="mainImage" name="mainImage" src="maicon.png" alt="메인 이미지" />
-    </main>
+	<main id="mainScreen">
+		<img id="mainImage" name="mainImage" src="maicon.png" alt="메인 이미지" />
+
+		<!-- 채팅 로그 영역 추가 -->
+		<div id="chatLog" class="hidden">
+			<button id="chatLogCloseBtn" type="button">×</button>
+			<div id="chatLogMessages"></div>
+		</div>
+	</main>
+
 
     <!-- 하단 입력 -->
     <footer id="bottomInput">
@@ -45,9 +52,60 @@
         id="userTextInput"
         name="userTextInput"
         type="text"
-        placeholder="텍스트를 입력하세요"
+        placeholder="채팅을 입력하세요"
       />
     </footer>
+
+    <!-- 여기부터 추가: 사이드바 & 오버레이 -->
+    <aside id="sidebar" aria-label="설정 사이드바">
+      <div id="sidebarHeader">
+        <span>설정</span>
+        <button id="sidebarCloseBtn" type="button" aria-label="사이드바 닫기">×</button>
+      </div>
+		<div id="sidebarContent">
+			<div class="settingRow">
+				<span class="settingLabel">설정 1</span>
+
+				<label class="toggleSwitch">
+				<input
+					type="checkbox"
+					id="setting1Toggle"
+					name="setting1Toggle"
+				/>
+				<span class="toggleSlider"></span>
+				</label>
+			</div>
+			<div class="settingRow">
+				<span class="settingLabel">설정 2</span>
+
+				<label class="toggleSwitch">
+				<input
+					type="checkbox"
+					id="setting2Toggle"
+					name="setting2Toggle"
+				/>
+				<span class="toggleSlider"></span>
+				</label>
+			</div>
+			<div class="settingRow">
+				<span class="settingLabel">설정 3</span>
+
+				<label class="toggleSwitch">
+				<input
+					type="checkbox"
+					id="setting3Toggle"
+					name="setting3Toggle"
+				/>
+				<span class="toggleSlider"></span>
+				</label>
+			</div>
+		</div>
+    </aside>
+
+    <div id="sidebarOverlay"></div>
   </div>
+
+  <!-- JS 파일 연결 -->
+  <script src="scripts.js"></script>
 </body>
 </html>
