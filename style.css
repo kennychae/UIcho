@@ -523,3 +523,72 @@ body{
   color: #111;
   border-bottom-left-radius: 4px;
 }
+
+/* 입력 줄: 인풋 + 전송 버튼 */
+#inputRow{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#userTextInput{
+  flex: 1;                 /* 입력칸이 가능한 넓게 */
+}
+
+/* 전송 버튼 */
+#sendBtn{
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--btnbg);
+  color: var(--intext);
+  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+#sendBtn:active{
+  transform: scale(0.96);
+}
+
+/* 녹음 버튼: 메인 화면 하단 중앙 쯤 */
+#recordBtn{
+  margin-top: auto;              /* mainScreen의 맨 아래 쪽으로 밀림 */
+  margin-bottom: 6px;            /* 입력칸과 살짝 거리 */
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  background: #666666;           /* 기본: 회색 (대기) */
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+/* 안쪽 작은 점(녹음 표시) */
+#recordBtn::before{
+  content: "";
+  position: absolute;
+  inset: 11px;                   /* 안쪽에 작은 원 */
+  border-radius: 50%;
+  background: #cccccc;           /* 대기 상태: 연한 회색 */
+}
+
+/* 녹음 중 상태 (클래스 토글) */
+#recordBtn.recording{
+  background: #e64545;           /* 빨간색 */
+}
+
+#recordBtn.recording::before{
+  background: #ffb3b3;           /* 안쪽도 붉은 계열 */
+}
+
+/* 눌렀을 때 살짝 줄어드는 느낌 */
+#recordBtn:active{
+  transform: scale(0.95);
+}

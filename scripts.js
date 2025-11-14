@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     startChatBtn.addEventListener("click", showChat);
   }
 
-  // 예시: 왼쪽 아이콘 버튼을 "홈으로"로 쓰고 싶다면:
+  // 왼쪽 아이콘 버튼을 누르면 홈으로 이동
   const subiconBtn = document.getElementById("subiconBtn");
   if (subiconBtn) {
     subiconBtn.addEventListener("click", showHome);
@@ -60,8 +60,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const chatLog    = document.getElementById("chatLog");
   const chatMsgs   = document.getElementById("chatLogMessages");
   const closeBtn   = document.getElementById("chatLogCloseBtn");
+  const sendBtn    = document.getElementById("sendBtn");
+  const recordBtn  = document.getElementById("recordBtn");
 
-  if (!mainScreen || !userInput || !chatLog || !chatMsgs || !closeBtn) return;
+  if (!mainScreen || !userInput || !chatLog || !chatMsgs || !closeBtn) {
+  console.warn("채팅 관련 요소를 찾을 수 없습니다.");
+ 
+  } else {
 
   function showChatLog() {
     chatLog.classList.remove("hidden");
@@ -84,34 +89,68 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // 🔹 공통: 메시지 전송 로직 함수
+  function sendMessage() {
+    const text = userInput.value.trim();
+    if (!text) return;
+
+    addChatMessage(text);
+    userInput.value = "";
+    showChatLog();
+  }
+
   // Enter로 메시지 추가
   userInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      const text = userInput.value.trim();
-      if (!text) return;
-
-      addChatMessage(text);
-      userInput.value = "";
-      showChatLog();
+      sendMessage();
     }
   });
+
+  // 🔹 전송 버튼 클릭 → 메시지 전송
+  if (sendBtn) {
+    sendBtn.addEventListener("click", () => {
+      sendMessage();
+      userInput.focus();
+    });
+  }
 
   // X 버튼 → 로그 닫기
   closeBtn.addEventListener("click", hideChatLog);
 
   // 화면의 다른 곳 클릭 → 로그 닫기 (로그/입력칸 제외)
   document.addEventListener("click", (e) => {
-    if (chatLog.classList.contains("hidden")) return;
+	if (chatLog.classList.contains("hidden")) return;
 
-    const isInChat = chatLog.contains(e.target);
-    const isInput  = (e.target === userInput);
+	const isInChat  = chatLog.contains(e.target);
+	const isInput   = (e.target === userInput);
+	const isSend    = sendBtn && sendBtn.contains(e.target);
+	const isRecord  = recordBtn && recordBtn.contains(e.target);
 
-    if (!isInChat && !isInput) {
-      hideChatLog();
-    }
+	// 🔹 로그 영역 / 입력칸 / 전송 버튼 / 녹음 버튼이 아니면 닫기
+	if (!isInChat && !isInput && !isSend && !isRecord) {
+		hideChatLog();
+	}
   });
 
+  // 🔹 녹음 버튼 토글 (색만 변경)
+  if (recordBtn) {
+    let isRecording = false;
+
+    recordBtn.addEventListener("click", () => {
+      isRecording = !isRecording;
+      recordBtn.classList.toggle("recording", isRecording);
+
+      // 접근성용: aria-pressed, aria-label도 상태에 맞춰 바꿔주기(선택사항)
+      recordBtn.setAttribute("aria-pressed", isRecording ? "true" : "false");
+      recordBtn.setAttribute(
+        "aria-label",
+        isRecording ? "음성 녹음 중지" : "음성 녹음 시작"
+      );
+    });
+  }
+
+  // 기존 addChatMessage 함수
   function addChatMessage(text) {
     const row = document.createElement("div");
     row.className = "chatRow me";
@@ -124,4 +163,5 @@ document.addEventListener("DOMContentLoaded", () => {
     chatMsgs.appendChild(row);
     chatLog.scrollTop = chatLog.scrollHeight;
   }
+}
 });

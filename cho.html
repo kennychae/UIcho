@@ -65,17 +65,33 @@
           <button id="chatLogCloseBtn" type="button">×</button>
           <div id="chatLogMessages"></div>
         </div>
+		
+		<!-- 녹음 버튼 -->
+		<button
+			id="recordBtn"
+			type="button"
+			aria-label="음성 녹음 시작"
+		></button>
       </main>
 
       <!-- 하단 입력 -->
       <footer id="bottomInput">
-        <input
-          id="userTextInput"
-          name="userTextInput"
-          type="text"
-          placeholder="텍스트를 입력하세요"
-        />
-      </footer>
+		<div id="inputRow">
+			<input
+				id="userTextInput"
+				name="userTextInput"
+				type="text"
+				placeholder="텍스트를 입력하세요"
+			/>
+			<button
+				id="sendBtn"
+				type="button"
+				aria-label="메시지 전송"
+			>
+				➤
+			</button>
+  </div>
+</footer>
 
       <!-- 사이드바 -->
       <aside id="sidebar" aria-label="설정 사이드바">
