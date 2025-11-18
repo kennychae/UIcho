@@ -62,48 +62,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!username || !password) return;
 
-      try {
-        const res = await fetch(`${API_BASE_URL}/api/login`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, password }),
-        });
-
-        if (!res.ok) {
-          console.error("로그인 요청 실패", res.status);
-          if (loginErrorEl) {
-            loginErrorEl.textContent = "서버 오류가 발생했습니다.";
-            loginErrorEl.classList.remove("hidden");
-          }
-          return;
-        }
-
-        const data = await res.json();
-        if (data.success) {
-          if (loginErrorEl) loginErrorEl.classList.add("hidden");
-
-          // 로그인 성공 → 홈 화면으로 전환
-          showHome();
-
-          // 로그인 후 기존 메시지 불러오기
-          if (typeof loadMessages === "function") {
-            loadMessages();
-          }
-        } else {
-          if (loginErrorEl) {
-            loginErrorEl.textContent = data.message || "아이디 또는 비밀번호가 올바르지 않습니다.";
-            loginErrorEl.classList.remove("hidden");
-          }
-        }
-      } catch (err) {
-        console.error("로그인 중 오류", err);
-        if (loginErrorEl) {
-          loginErrorEl.textContent = "네트워크 오류가 발생했습니다.";
-          loginErrorEl.classList.remove("hidden");
-        }
-      }
+      showHome()
+//      try {
+//        const res = await fetch(`${API_BASE_URL}/api/login`, {
+//          method: "POST",
+//          headers: {
+//            "Content-Type": "application/json",
+//          },
+//          body: JSON.stringify({ username, password }),
+//        });
+//
+//        if (!res.ok) {
+//          console.error("로그인 요청 실패", res.status);
+//          if (loginErrorEl) {
+//            loginErrorEl.textContent = "서버 오류가 발생했습니다.";
+//            loginErrorEl.classList.remove("hidden");
+//          }
+//          return;
+//        }
+//
+//        const data = await res.json();
+//        if (data.success) {
+//          if (loginErrorEl) loginErrorEl.classList.add("hidden");
+//
+//          // 로그인 성공 → 홈 화면으로 전환
+//          showHome();
+//
+//          // 로그인 후 기존 메시지 불러오기
+//          if (typeof loadMessages === "function") {
+//            loadMessages();
+//          }
+//        } else {
+//          if (loginErrorEl) {
+//            loginErrorEl.textContent = data.message || "아이디 또는 비밀번호가 올바르지 않습니다.";
+//            loginErrorEl.classList.remove("hidden");
+//          }
+//        }
+//      } catch (err) {
+//        console.error("로그인 중 오류", err);
+//        if (loginErrorEl) {
+//          loginErrorEl.textContent = "네트워크 오류가 발생했습니다.";
+//          loginErrorEl.classList.remove("hidden");
+//        }
+//      }
     });
   }
 
