@@ -4,13 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>웹 샘플</title>
-  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-  <!-- 가운데에 놓을 '폰 화면' 래퍼 -->
   <div id="phone">
-
-    <!-- 🔹 ① 로그인 화면 (폰 안으로 이동 + screen-page 클래스 추가) -->
+    <!-- ① 로그인 화면 (폰 안으로 이동 + screen-page 클래스 추가) -->
     <div id="loginScreen" class="screen-page">
       <h1>로그인</h1>
       <form id="loginForm">
@@ -27,7 +25,7 @@
       </form>
     </div>
 
-    <!-- 🔹 ② 홈 화면 -->
+    <!-- ② 홈 화면 -->
     <div id="homeScreen" class="screen-page hidden">
       <header id="homeHeader">
         <span id="homeTitle">채팅</span>
@@ -44,7 +42,7 @@
       </main>
     </div>
 
-    <!-- 🔹 ③ 채팅 화면 -->
+    <!-- ③ 채팅 화면 -->
     <div id="app" class="screen-page hidden">
       <header id="topBar">
         <div id="leftControls">
@@ -131,6 +129,6 @@
       <div id="sidebarOverlay"></div>
     </div>
   </div>
-  <script src="/static/scripts.js" defer></script>
+  <script src="/scripts.js" defer></script>
 </body>
 </html>
