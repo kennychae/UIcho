@@ -592,3 +592,68 @@ body{
 #recordBtn:active{
   transform: scale(0.95);
 }
+
+/* ===== 로그인 화면 ===== */
+/* #phone 안에서 다른 화면들과 동일하게 한 장짜리 페이지로 겹치게 */
+#loginScreen{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px 20px;
+  background: var(--panel);
+}
+
+#loginScreen h1{
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#loginForm{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.loginRow{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.loginRow label{
+  font-size: 13px;
+}
+
+.loginRow input{
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  padding: 0 10px;
+  background: #111521;
+  color: var(--intext);
+}
+
+#loginSubmitBtn{
+  margin-top: 8px;
+  height: 42px;
+  border-radius: 10px;
+  border: none;
+  background: var(--btnbg);
+  color: var(--intext);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#loginSubmitBtn:active{
+  transform: scale(0.97);
+}
+
+.loginError{
+  margin-top: 6px;
+  font-size: 13px;
+  color: #d93025;
+}
